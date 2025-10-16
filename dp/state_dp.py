@@ -42,8 +42,8 @@ def maxProfit(prices: List[int]) -> int:
     return sell_state_cache[-1]
 
 
-# 188. 买卖股票的最佳时机 VI (多了交易次数限制, 也是状态机dp(二维), 有几个状态就定义几个cache)
-# https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/description/
+# 188. 买卖股票的最佳时机 IV (多了交易次数限制, 也是状态机dp(二维), 有几个状态就定义几个cache)
+# https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/description/
 def maxProfit(k: int, prices: List[int]) -> int:
     # 初始化(hold_state_cache[i][j]表示第i天若持有股票且已交易j次的最大利润, sell_state_cache[i][j]表示第i天若不持有股票且已交易j次的最大利润)
     hold_state_cache = [[0] * (k+1) for _ in range(len(prices)+1)]

@@ -1,6 +1,11 @@
 from typing import List, Optional
 
 
+# 树形DP (通常使用后序遍历, 递推)
+# 递推: 自底向上, 先解决子问题, 再解决原问题
+# 需要返回子问题的结果, 然后根据子问题的结果递推出原问题的结果
+
+
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -19,6 +24,7 @@ def diameterOfBinaryTreeRec(root: Optional[TreeNode], max_d) -> int:
         if not (root.left or root.right):
             return 0
         else:
+            # l_max_d 表示左子树的最大直径(可能不包含当前节点), l_max表示左子树包含当前节点的最大直径(即深度)
             l_max_d, l_max = diameterOfBinaryTreeRec(root.left, max_d)
             r_max_d, r_max = diameterOfBinaryTreeRec(root.right, max_d)
             cur_depth = max(l_max, r_max) + 1
@@ -35,7 +41,7 @@ def diameterOfBinaryTree(root: Optional[TreeNode]) -> int:
 
 
 
-# 124. 二叉树中的最大路径和 (树形DP, 通常使用后序遍历)
+# 124. 二叉树中的最大路径和 (树形DP, 通常使用后序遍历, 递推)
 # https://leetcode.cn/problems/binary-tree-maximum-path-sum/?envType=study-plan-v2&envId=top-100-liked
 def maxPathSumRec(self, root: Optional[TreeNode], global_max=-10000) -> tuple[int, int]:
     # 空结点

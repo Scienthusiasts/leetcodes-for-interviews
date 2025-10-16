@@ -55,30 +55,6 @@ class Solution:
 
 
 
-    # 139. 单词拆分(一维dp, 只要存在某j使得[0, j]可拆分+[j+1, i]可拆分, 则认为[0, i]可拆分. [0, j]可转化为查表)
-    # https://leetcode.cn/problems/word-break/description/?envType=study-plan-v2&envId=top-100-liked
-    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        # cache[i]表示[0, i-1]是否匹配 ([0, -1]代表空, 恒匹配)
-        cache = [False]*(len(s)+1)
-        cache[0] = True
-
-        # 从左到右匹配
-        for i in range(len(s)):
-            match = False
-            # [0, j-1]匹配且[j, i]匹配
-            for j in range(i+1):
-                j_exit = cache[j]
-                i_exit = s[j:i+1] in wordDict
-                match = j_exit and i_exit
-                if match: break
-            cache[i+1] = match
-        # print(cache)
-        return cache[-1]
-
-
-
-
-
 
 
     # 62. 不同路径(二维dp, 简单) 
@@ -116,6 +92,10 @@ class Solution:
     
 
 
+            
+
+
+
 
 
 
@@ -130,5 +110,5 @@ class Solution:
 if __name__ == '__main__':
     sol = Solution()
     
-    print(sol.findMaxForm(["10","0001","111001","1","0"], 4, 3))
+
 

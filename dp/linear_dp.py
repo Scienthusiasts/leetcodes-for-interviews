@@ -3,6 +3,31 @@ from typing import List
 
 
 
+
+
+
+# 139. 单词拆分(一维dp, 只要存在某j使得[0, j]可拆分+[j+1, i]可拆分, 则认为[0, i]可拆分. [0, j]可转化为查表)
+# https://leetcode.cn/problems/word-break/description/?envType=study-plan-v2&envId=top-100-liked
+def wordBreak(s: str, wordDict: List[str]) -> bool:
+    # cache[i]表示[0, i-1]是否匹配 ([0, -1]代表空, 恒匹配)
+    cache = [False]*(len(s)+1)
+    cache[0] = True
+
+    # 从左到右匹配
+    for i in range(len(s)):
+        match = False
+        # [0, j-1]匹配且[j, i]匹配
+        for j in range(i+1):
+            j_exit = cache[j]
+            i_exit = s[j:i+1] in wordDict
+            match = j_exit and i_exit
+            if match: break
+        cache[i+1] = match
+    # print(cache)
+    return cache[-1]
+
+
+
 # 53. 最大子数组和
 # 有负数, 得用一维动态规划(一维dp)(是不是也能用前缀和+hash?) 
 # https://leetcode.cn/problems/maximum-subarray/description/?envType=study-plan-v2&envId=top-100-liked
@@ -58,7 +83,7 @@ def minDistance(self, word1: str, word2: str) -> int:
 # 300. 最长递增子序列(一维dp)
 # https://leetcode.cn/problems/longest-increasing-subsequence/description/?envType=study-plan-v2&envId=top-100-liked
 def lengthOfLIS(nums: List[int]) -> int:
-    # cache[i]表示当最长递增子序列长度为i时, 序列的最大值为多少
+    # cache[i]表示当最长递增子序列长度为i时, 序列的最大值为多少(巧妙)
     inf = 10000
     cache = [-inf]
 
@@ -89,7 +114,8 @@ def longestValidParentheses(s: str) -> int:
             if s[i-1] == '(':
                 # 之前的长度+当前匹配的一对
                 cache[I] = cache[I-2] + 2
-            # 匹配的部分还要再前面的情况
+            # 匹配的部分还要再前面的情况(i - cache[I-1] - 1表示前一个)匹配的长度)
+            # 加s[i - cache[I-1] - 1] == '('是为了防止都是类似')))))'这种情况
             elif s[i-1] == ')' and i - cache[I-1] - 1 >= 0 and s[i - cache[I-1] - 1] == '(':
                 # 上一次的长度+当前匹配的一对+上上次(所有之前)的长度
                 cache[I] = cache[I-1] + 2 + cache[I - cache[I-1] - 2]

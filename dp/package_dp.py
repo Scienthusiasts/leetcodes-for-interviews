@@ -12,7 +12,7 @@
 # cache是二维的(cache[i][j], i表示装几个物品, j表示背包容量(注意顺序不能错))
 # 01背包:每种物品只能选一次
 # 完全背包:每种物品可以无限重复选
-# 恰好装满型背包: 根据选最少或选最多, cache的初始化值为inf或-inf
+# 恰好装满型背包: 根据选最少或选最多, cache的初始化值为inf或-inf(为什么)
 
 # 不同的背包题型，大致的框架是一样的，不一样的可能在于初始化条件和状态转移方程
 # 遇到"总数"类型, 一般在状态转移使用相加，cache初始化为0即可 (518. 零钱兑换 II)
@@ -85,7 +85,7 @@ def numSquares(n: int) -> int:
 # https://leetcode.cn/problems/coin-change/description/
 def coinChange(coins: List[int], amount: int) -> int:
     # 初始化 cache[i][w]表示对前i个物品，总金额为w时, 能放的最少硬币个数
-    inf = 10 ** 10
+    inf = 1e+10
     cache = [[inf] * (amount+1) for _ in range(len(coins)+1)]
     cache[0][0] = 0
 
@@ -168,8 +168,7 @@ def findMaxForm(strs: List[str], m: int, n: int) -> int:
             if s == '1': is_1 += 1
         nums.append([is_0, is_1])
     print(nums)
-    
-    # dp[i][j]表示当m=i-1, n=j-1时的最大子集长度
+
     # dp (k+1, m+1, n+1), dp[k][m][n]表示当包含前k个strs时, m, n的情况下的最大子集 
     k = len(strs)
     # 注意写法, 不要出现浅拷贝问题
@@ -205,4 +204,4 @@ def findMaxForm(strs: List[str], m: int, n: int) -> int:
 if __name__ == '__main__':
     # print(package(11, [1,6,18,22,28], [1,2,5,6,7], is_01=True, full=False))
     # print(package(10, [6,18,22,28], [2,5,6,7], is_01=True, full=True))
-    print(package(4, [15, 20, 30], [1, 3, 4], is_01=False, full=True))
+    print(package(4, [15, 20, 30], [2, 3, 3], is_01=True, full=True))

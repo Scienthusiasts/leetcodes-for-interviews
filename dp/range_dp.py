@@ -35,7 +35,7 @@ def longestPalindrome(self, s: str) -> str:
 
 # 516. 最长回文子序列(上一题的改版, 注意遍历顺序和转态转移方程)
 # https://leetcode.cn/problems/longest-palindromic-subsequence/description/
-def longestPalindromeSubseq(self, s: str) -> int:
+def longestPalindromeSubseq(s: str) -> int:
     n = len(s)
     # dp[i][j]表示i到j的子序列中的最长回文子序列长度
     dp = [[0] * n for _ in range(n)]
@@ -81,7 +81,23 @@ def minScoreTriangulation(values: List[int]) -> int:
 
 
 
+# 矩阵连乘的最小计算量
+# 解析: https://developer.aliyun.com/article/1626301
+def mat_mul(mat_size):
+    n = len(mat_size)
+    # dp[i][j]表示[i,j]的矩阵连乘的最小计算量
+    dp = [[0]*(n) for _ in range(n)]
 
+    for i in range(n-1, -1, -1):
+        for j in range(i, n):
+            if i < j:
+                tmp = []
+                # [i,j]的矩阵连乘的最小计算量可由[i, k], [k+1, j]的最小计算量推出, 然后加上A_ik@Ak+1j的计算量(遍历k)
+                for k in range(i, j):
+                    tmp.append(dp[i][k] + dp[k+1][j] + mat_size[i][0]*mat_size[k][1]*mat_size[j][1])
+                dp[i][j] = min(tmp)
+
+    return dp[0][-1]
 
 
 
